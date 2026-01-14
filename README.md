@@ -78,7 +78,7 @@ Styling is intentionally minimal and consistent to work with most themes.
 
 Time Spent
 
-75–6 hours, including:
+7 hours, including:
 
 Plugin setup and shortcode form
 

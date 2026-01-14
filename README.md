@@ -7,179 +7,90 @@ Project: Technical Assessment – Vetro Media
 
 ------------------------------------------------------------------------
 
-Purpose
+Installation Steps
 
-This plugin demonstrates:
+1. Download the plugin ZIP file.
 
--   Conditional front-end logic without page reloads
--   Secure WordPress AJAX handling
--   External REST API integration
--   Service-based PHP architecture
--   Clean separation of business logic and presentation
+2. In WordPress Admin, go to Plugins → Add New → Upload Plugin.
 
-It is designed as a maintainable, testable codebase rather than a
-one-off script.
+3. Upload the ZIP and click Install Now.
 
-------------------------------------------------------------------------
+4. Click Activate.
 
-Installation
+5. Create or edit a page and add the shortcode: [quote_calculator]
 
-1.  Upload the plugin ZIP to /wp-content/plugins/ or via WordPress Admin
-    → Plugins → Add New → Upload.
-2.  Activate Freelance Quote Calculator.
-3.  Insert the shortcode into any page:
-
-[quote_calculator]
-
-------------------------------------------------------------------------
-
-High-Level Architecture
-
-The plugin is structured around three responsibilities:
-
-1.  UI Rendering (shortcode)
-2.  Business Logic (service class)
-3.  Integration Layer (AJAX + external API)
-
-Directory layout:
-
-freelance-quote-calculator/ ├── freelance-quote-calculator.php
-(Bootstrap, shortcode, AJAX controller) ├── src/ │ └── Services/ │ └──
-PricingService.php (Business logic) └── assets/ ├──
-css/quote-calculator.css └── js/quote-calculator.js
-
-------------------------------------------------------------------------
-
-Data Flow
-
-1.  User selects a service (Web, Design, Writing).
-2.  JavaScript shows relevant conditional fields.
-3.  Account managers are fetched via:
-    https://jsonplaceholder.typicode.com/users
-4.  On submit:
-    -   Data is sent to admin-ajax.php
-    -   Nonce is verified server-side
-    -   Inputs are sanitized
-    -   PricingService calculates the quote
-5.  Quote data is POSTed to: https://jsonplaceholder.typicode.com/posts
-6.  Server returns a success response (quote only).
-7.  Front-end renders result in a bordered summary card.
-
-------------------------------------------------------------------------
-
-Pricing Engine (Service Layer)
-
-All pricing logic lives in:
-
-src/Services/PricingService.php
-
-This class is responsible for: - Validating required fields per
-service - Applying pricing rules - Returning a numeric quote
-
-Example interface:
-
-calculate(string $service, array $data): float
-
-This ensures: - Separation of concerns - Easy unit testing - Future
-extensibility (e.g., new services, pricing rules)
-
-------------------------------------------------------------------------
-
-Security Considerations
-
--   Nonce verification using check_ajax_referer
--   All inputs sanitized via sanitize_text_field
--   Server-side validation of required fields
--   No reliance on client-side values for pricing
--   External API errors handled via wp_remote_post checks
-
-------------------------------------------------------------------------
-
-API Integration
-
-GET
-
-Fetch account managers: https://jsonplaceholder.typicode.com/users
-
-POST
-
-Submit quote payload: https://jsonplaceholder.typicode.com/posts
-
-Payload structure:
-
-{ “service”: “web”, “account_manager”: “Jane Doe”, “quote”: 4500,
-“submitted_at”: “ISO8601 timestamp” }
-
-Notes: - API is used as a mock integration target. - Response IDs are
-intentionally not exposed in the UI.
-
-------------------------------------------------------------------------
-
-UI Rules 
-
--   20px vertical spacing between fields
--   0px border radius across inputs, buttons, and cards
--   Results displayed in a bordered card with bold black text
--   Reset / New Quote button clears state
-
-CSS is scoped to the plugin to avoid theme interference.
-
-------------------------------------------------------------------------
-
-Validation Logic
-
-Each service enforces required fields:
-
-Web Development: - pages (int > 0) - timeline (1–3) - ecommerce (yes/no)
-
-Graphic Design: - design_type must exist in allowed set - revisions >= 0
-
-Content Writing: - word_count >= 100 - seo (yes/no)
-
-Invalid or missing fields return server-side errors.
-
-------------------------------------------------------------------------
-
-Extensibility
-
-To add a new service:
-
-1.  Add new conditional fields in the shortcode form.
-2.  Extend PricingService with a new method.
-3.  Add case in calculate() switch.
-4.  Adjust front-end JS to toggle new section.
+6. Publish the page and open it on the front-end to use the calculator.
 
 
 ------------------------------------------------------------------------
 
-Testing Readiness
+How the Pricing Logic Works
 
-Pricing logic is isolated in a single service class, making it suitable
-for:
+Pricing is calculated server-side (PHP) in a dedicated service class (PricingService) based on the selected service type and provided inputs.
 
--   PHPUnit / WP_UnitTestCase
--   Mocked input testing
--   CI integration
+Web Development
+
+R500 per page
+
++ R2000 if E-commerce is required
+
++ R500 per timeline month (1 / 2 / 3+ months)
+
+Example: 5 pages + e-commerce + 2 months
+= (5 × 500) + 2000 + (2 × 500) = R5500
+
+Graphic Design
+
+Base pricing by project type:
+
+Logo: R1500
+
+Branding: R3000
+
+Print: R1000
+
++ R300 per revision
+
+Example: Branding + 3 revisions
+= 3000 + (3 × 300) = R3900
+
+Content Writing
+
+R150 per 100 words
+
++ R500 if SEO optimization is required
+
+Example: 1000 words + SEO
+= (1000/100 × 150) + 500 = 1500 + 500 = R2000
 
 ------------------------------------------------------------------------
 
-Assumptions
+Assumptions Made
 
--   JSONPlaceholder is a stand-in for a real API.
--   Pricing rules are demonstrative.
--   Focus is on architecture, security, and maintainability rather than
-    design polish.
+Pricing values are demonstration only and intended to show conditional logic.
 
+JSONPlaceholder is used as a mock API, so responses are simulated.
+
+Quote data is submitted to the API on successful calculation, but the UI does not display an API response ID (kept clean for UX).
+
+Styling is intentionally minimal and consistent to work with most themes.
 ------------------------------------------------------------------------
 
 Time Spent
 
-7 hours: - Architecture design - AJAX & API
-integration - Service-layer refactor - Validation and security - UI
-rules enforcement - Documentation
+75–6 hours, including:
 
-------------------------------------------------------------------------
+Plugin setup and shortcode form
 
-Author
-Bongani Nombamba
+Conditional UI logic (JS)
+
+Server-side pricing logic (service class)
+
+AJAX + nonce security + sanitisation
+
+API integration (GET users + POST quote)
+
+UI polish and documentation
+
+
 

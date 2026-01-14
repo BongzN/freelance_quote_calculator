@@ -1,0 +1,109 @@
+
+/* 
+ * Plugin UI rules requested:
+ * - 20px padding between fields (vertical spacing)
+ * - 0px corner radius everywhere (inputs/buttons/cards)
+ * These styles are scoped to the plugin form to avoid affecting the theme.
+ */
+
+.fqc-form {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* 20px vertical spacing between all form fields/blocks */
+.fqc-field {
+  margin-bottom: 20px;
+}
+
+/* Labels */
+.fqc-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.fqc-required {
+  color: #c00;
+}
+
+/* Inputs/selects */
+.fqc-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 0 !important; /* Force square corners */
+  box-sizing: border-box;
+}
+
+/* Inline radios */
+.fqc-inline {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.fqc-radio input {
+  margin-right: 8px;
+}
+
+/* Section titles inside conditional blocks */
+.fqc-section-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 10px 0 20px 0;
+}
+
+/* Buttons */
+.fqc-button {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #8b0000;
+  background: #8b0000;
+  color: #fff;
+  font-weight: 800;
+  border-radius: 0 !important; /* Force square corners */
+  cursor: pointer;
+}
+.fqc-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.fqc-button-secondary {
+  background: #fff;
+  color: #111;
+  border: 1px solid #111;
+}
+
+/* Result area */
+.fqc-result {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Bordered result card */
+.fqc-card {
+  border: 1px solid #111;
+  padding: 16px;
+  border-radius: 0 !important; /* Force square corners */
+  background: #fff;
+}
+.fqc-card-error {
+  border-color: #c00;
+  color: #c00;
+  font-weight: 700;
+}
+
+/* Bold black quote text */
+.fqc-quote {
+  font-weight: 900;
+  color: #000;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+.fqc-success {
+  color: #111;
+  font-weight: 600;
+}
+
+/* Hide conditional sections until a service is selected */
+#fqc-form .conditional { display: none; }

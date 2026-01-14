@@ -74,6 +74,7 @@ JSONPlaceholder is used as a mock API, so responses are simulated.
 Quote data is submitted to the API on successful calculation, but the UI does not display an API response ID (kept clean for UX).
 
 Styling is intentionally minimal and consistent to work with most themes.
+
 ------------------------------------------------------------------------
 
 Time Spent
